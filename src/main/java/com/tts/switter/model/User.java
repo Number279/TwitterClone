@@ -8,13 +8,13 @@ import org.hibernate.annotations.CreationTimestamp;
 
 import javax.persistence.*;
 import java.util.Date;
+import java.util.Set;
 
 @Data
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-
 public class User {
 
     @Id
@@ -31,5 +31,12 @@ public class User {
 
     @CreationTimestamp
     private Date createdAt;
+
+    //set is a data structure that is unordered and does not allow duplicates
+    @ManyToMany(cascade = CascadeType.ALL)
+    @JoinTable(name = "user_role", joinColumns = @JoinColumn(name = "user_id"),
+    inverseJoinColumns = @JoinColumn(name = "role_id"))
+    // TODO(): Create Role class
+    private Set<Role> roles;
 
 }
